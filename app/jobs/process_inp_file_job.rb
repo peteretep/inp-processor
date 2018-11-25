@@ -1,8 +1,8 @@
-class ProcessIniFileJob < ApplicationJob
+class ProcessInpFileJob < ApplicationJob
   queue_as :default
 
-  def perform(file)
-    data = File.read(file.path)
+  def perform(file_path, email)
+    data = File.read(file_path)
 
     building = Building.new
     building.p_name = /P-NAME\s*=\s*"(?<pname>.+)"/.match(data)[1]
@@ -10,6 +10,6 @@ class ProcessIniFileJob < ApplicationJob
     building.b_type = /B-TYPE\s*=\s*(?<btype>.+)/.match(data)[1]
 
     building.save
-    IniProcessedMailer.ini_processed_email.deliver_now
+    InpProcessedMailer.inp_processed_email(email).deliver_now
   end
 end

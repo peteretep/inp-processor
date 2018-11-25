@@ -10,6 +10,6 @@ class ProcessIniFileJob < ApplicationJob
     building.b_type = /B-TYPE\s*=\s*(?<btype>.+)/.match(data)[1]
 
     building.save
-    # IniProcessedMailer.ini_processed_email.deliver_now
+    IniProcessedMailer.ini_processed_email.deliver_now
   end
 end

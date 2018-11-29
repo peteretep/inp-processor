@@ -3,11 +3,8 @@ require 'inpImporter/inpImporter'
   queue_as :default
 
   def perform(file_path, email)
-    parse_data = InpImporter.new(file_path).parse
-    building = Building.new
-    building.p_name = parse_data[:p_name]
-    building.b_type = parse_data[:b_type]
+    inp_importer = InpImporter.new(file_path)
+    building = Building.new(inp_importer.general)
     building.save
   end
-
 end
